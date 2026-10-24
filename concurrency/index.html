@@ -103,6 +103,7 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* shell: rail and content scroll independently */
 .shell { flex: 1; min-height: 0; display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); }
+.shell.no-rail { grid-template-columns: minmax(0, 1fr); max-width: 980px; margin: 0 auto; width: 100%; }
 .rail { min-height: 0; overflow-y: auto; overscroll-behavior: contain; background: var(--wall); border-right: 1px solid var(--rule);
   padding: 18px 14px 48px max(14px, env(safe-area-inset-left, 0px)); }
 main { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scroll-padding-top: 20px;
@@ -440,6 +441,9 @@ input[type="checkbox"] { accent-color: var(--green); width: 17px; height: 17px; 
 .phase-card .pc-pct { font: 600 12.5px var(--mono); color: var(--ink-2); font-variation-settings: "MONO" 1, "CASL" 0; }
 .phase-card .pc-meta { font-size: 12.5px; color: var(--ink-2); line-height: 1.4; }
 .phase-card .pc-count { font-size: 11.5px; color: var(--ink-3); }
+.ref-links { list-style: none; margin: 2px 0 0; padding: 0; display: grid; gap: 3px; }
+.ref-links a { display: flex; align-items: center; gap: 6px; color: var(--ink); text-decoration: none; font-size: 13.5px; font-weight: 700; padding: 3px 0; }
+.ref-links a:hover { color: var(--acc); }
 @media (max-width: 560px) { .phase-grid { grid-template-columns: 1fr; } }
 .panel { padding: 18px 20px; border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); }
 .panel h3 { margin: 0 0 10px; }
@@ -918,9 +922,7 @@ svg.fig.spast { display: none; }
   </defs>
 </svg>
 <header class="topbar">
-  <button class="menubtn" id="menubtn" type="button" aria-expanded="false" aria-controls="rail">
-    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>Contents</button>
-  <a class="brand" href="#home" aria-label="Java Concurrency Handbook, home">
+    <a class="brand" href="#home" aria-label="Java Concurrency Handbook, home">
     <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M2.5 5.5 C8 5.5 8.5 13 13 13" fill="none" stroke="var(--p1)" stroke-width="2.2" stroke-linecap="round"/><path d="M2.5 20.5 C8 20.5 8.5 13 13 13" fill="none" stroke="var(--p2)" stroke-width="2.2" stroke-linecap="round"/><path d="M17 11 V8.6 a2.75 2.75 0 0 1 5.5 0 V11" fill="none" stroke="var(--p4)" stroke-width="2"/><rect x="14.5" y="11" width="10.5" height="9" rx="2.2" fill="var(--surface)" stroke="var(--p4)" stroke-width="2.2"/><circle cx="19.75" cy="15.5" r="1.4" fill="var(--p4)"/></svg>
 
     <span class="bt">Java Concurrency<span class="bt2"> Handbook</span></span></a>
@@ -928,8 +930,8 @@ svg.fig.spast { display: none; }
   <span class="spacer"></span>
   <span class="sync" id="sync" data-s="local"><span id="synctext">Saved in this browser</span></span>
 </header>
-<div class="shell">
-  <nav class="rail" id="rail" aria-label="Handbook contents">
+<div class="shell no-rail">
+  <nav class="rail" id="rail" hidden aria-label="Handbook contents">
     <div class="railhead">
       <div class="overall"><div class="row"><span>Lessons studied</span><b id="ovnum">0</b></div><span class="bar"><i id="ovbar"></i></span><span class="kicker" id="ovtext"></span></div>
       <div class="search"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -939,7 +941,7 @@ svg.fig.spast { display: none; }
     <div id="results" class="results" hidden></div>
   </nav>
   <main id="main">
-<section class="view hue ph0" id="v-home" data-view="home" data-phase="0" data-group="Start" data-kind="page" data-h="165" style="--h:165" hidden><div class="vgrid hasside"><div class="vbody"><div class="hhero"><h1>Java Concurrency Handbook</h1><p class="lede">Java concurrency from your first thread to SDE-2 production work, in 15 modules and 10 hands-on labs. Every lesson opens with a question to try, every flow diagram steps through, every Java sample on these pages compiles and runs on Java 21, and a practice tracker brings each exercise back for spaced review.</p><div class="hactions"><a class="btn primary" id="continue" href="/concurrency/foundations/#m01">Start with Module 1: Threads and tasks</a><a class="btn" href="#l01">Go to the labs</a><a class="btn" href="#cheats">Open the cheat sheet</a></div></div><h2>Study in four parts</h2><p>Each phase is its own page, so you only load what you are studying right now.</p><div class="phase-grid" id="phasecards"></div><div class="dash" id="dashboard"><p class="empty">Loading your progress.</p></div><h2 id="home-how-this-handbook-teaches">How this handbook teaches</h2>
+<section class="view hue ph0" id="v-home" data-view="home" data-phase="0" data-group="Start" data-kind="page" data-h="165" style="--h:165" hidden><div class="vgrid hasside"><div class="vbody"><div class="hhero"><h1>Java Concurrency Handbook</h1><p class="lede">Java concurrency from your first thread to SDE-2 production work, in 15 modules and 10 hands-on labs. Every lesson opens with a question to try, every flow diagram steps through, every Java sample on these pages compiles and runs on Java 21, and a practice tracker brings each exercise back for spaced review.</p><div class="hactions"><a class="btn primary" id="continue" href="/concurrency/foundations/#m01">Start with Module 1: Threads and tasks</a><a class="btn" href="#l01">Go to the labs</a><a class="btn" href="#cheats">Open the cheat sheet</a></div></div><h2>Study in four parts</h2><p>Each phase is its own page, so you only load what you are studying right now.</p><div class="phase-grid" id="phasecards"></div><h2>Labs and reference</h2><p>Shared across every phase, so they stay here on the handbook's home page.</p><div class="phase-grid" id="toolcards"><a class="phase-card hue" style="--h:262" href="#l01"><div class="pc-top"><span class="pc-name">Labs</span><span class="pc-pct" id="labspct"></span></div><span class="pc-meta">10 hands-on labs: counters, caches, bulkheads, rate limiters, and a capstone job runner.</span><span class="bar"><i id="labsbar"></i></span><span class="pc-count" id="labscount"></span></a><div class="phase-card ref-card hue" style="--h:35"><div class="pc-top"><span class="pc-name">Reference</span></div><span class="pc-meta">Quick lookups while you work.</span><ul class="ref-links"><li><a href="#cheats">Cheat sheet</a></li><li><a href="#interview">Interview drill</a></li><li><a href="#glossary">Glossary</a></li></ul></div><div class="phase-card ref-card hue" style="--h:210"><div class="pc-top"><span class="pc-name">Plan</span></div><span class="pc-meta">Track where you stand.</span><ul class="ref-links"><li><a href="#tracker">Practice tracker</a></li><li><a href="#ready">SDE-2 readiness check</a></li></ul></div></div><div class="dash" id="dashboard"><p class="empty">Loading your progress.</p></div><h2 id="home-how-this-handbook-teaches">How this handbook teaches</h2>
 <p>The goal is not to memorize APIs. It is to look at any piece of concurrent code and answer three questions: <strong>which data is shared, what can interleave, and what guarantees the ordering</strong>. So the handbook asks you to think before it explains.</p>
 <ul>
 <li><strong>Try before you read.</strong> Every lesson opens with a short question. Answer it first, on paper or in your head. Getting it wrong is what makes the explanation stick.</li>
@@ -2831,9 +2833,10 @@ var MODULE_URL = {"home": "/concurrency/", "map": "/concurrency/", "m01": "/conc
       Object.keys(state.k).forEach(function (k) { if (k.indexOf("l:") === 0 && state.k[k] && state.k[k].v) done++; });
     }
     var cdone = CASES.filter(function (c) { return isDone(statusOf(c)); }).length;
-    document.getElementById("ovnum").textContent = done;
-    document.getElementById("ovbar").style.width = pct(done, totalLessons) + "%";
-    document.getElementById("ovtext").textContent = "of " + totalLessons + " lessons (" + pct(done, totalLessons) + "%), " + cdone + " of " + CASES.length + " labs solved";
+    var ovnumEl = document.getElementById("ovnum"), ovbarEl = document.getElementById("ovbar"), ovtextEl = document.getElementById("ovtext");
+    if (ovnumEl) ovnumEl.textContent = done;
+    if (ovbarEl) ovbarEl.style.width = pct(done, totalLessons) + "%";
+    if (ovtextEl) ovtextEl.textContent = "of " + totalLessons + " lessons (" + pct(done, totalLessons) + "%), " + cdone + " of " + CASES.length + " labs solved";
     MODULES.forEach(function (id) {
       var st = viewStats(id);
       var meter = document.querySelector('[data-navmod="' + id + '"] i'); if (meter) meter.style.width = Math.round(st.score * 100) + "%";
@@ -2974,6 +2977,12 @@ var MODULE_URL = {"home": "/concurrency/", "map": "/concurrency/", "m01": "/conc
         '<span class="bar"><i style="width:' + p + '%"></i></span>' +
         '<span class="pc-count">' + lDone + " / " + lTotal + ' lessons</span></a>';
     }).join("");
+    var cdone = CASES.filter(function (c) { return isDone(statusOf(c)); }).length;
+    var lp = pct(cdone, CASES.length);
+    var labspctEl = document.getElementById("labspct"), labsbarEl = document.getElementById("labsbar"), labscountEl = document.getElementById("labscount");
+    if (labspctEl) labspctEl.textContent = lp + "%";
+    if (labsbarEl) labsbarEl.style.width = lp + "%";
+    if (labscountEl) labscountEl.textContent = cdone + " / " + CASES.length + " labs solved";
   }
   function renderAll() { renderControls(); renderDashboard(); renderTracker(); renderPhaseCards(); }
 
@@ -3070,7 +3079,7 @@ var MODULE_URL = {"home": "/concurrency/", "map": "/concurrency/", "m01": "/conc
     INDEX.push({ kind: "Exercises", text: it.t, sub: it.f, href: "#tracker", item: it.id });
   });
   var q = document.getElementById("q"), results = document.getElementById("results"), navlist = document.getElementById("navlist");
-  function clearSearch() { q.value = ""; results.hidden = true; navlist.hidden = false; }
+  function clearSearch() { if (q) q.value = ""; if (results) results.hidden = true; if (navlist) navlist.hidden = false; }
   function runSearch() {
     var term = q.value.trim().toLowerCase();
     if (!term) { clearSearch(); return; }
@@ -3092,24 +3101,28 @@ var MODULE_URL = {"home": "/concurrency/", "map": "/concurrency/", "m01": "/conc
     results.innerHTML = total ? h : '<p class="none">Nothing matches "' + esc(q.value.trim()) + '". Try a class (ExecutorService, ConcurrentHashMap), a concept (happens-before, deadlock), or a keyword (volatile).</p>';
     results.hidden = false; navlist.hidden = true;
   }
-  q.addEventListener("input", runSearch);
-  q.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { clearSearch(); q.blur(); }
-    if (e.key === "Enter") { var first = results.querySelector("a"); if (first) first.click(); }
-  });
+  if (q) {
+    q.addEventListener("input", runSearch);
+    q.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { clearSearch(); q.blur(); }
+      if (e.key === "Enter") { var first = results.querySelector("a"); if (first) first.click(); }
+    });
+  }
   document.addEventListener("keydown", function (e) {
-    if (e.key === "/" && document.activeElement !== q && !/input|textarea|select/i.test(document.activeElement.tagName)) { e.preventDefault(); openNavIfNarrow(); q.focus(); }
+    if (q && e.key === "/" && document.activeElement !== q && !/input|textarea|select/i.test(document.activeElement.tagName)) { e.preventDefault(); openNavIfNarrow(); q.focus(); }
     if (e.key === "Escape") closeNav();
   });
 
   // ------------------------------------------------------------ mobile drawer
   var scrim = document.getElementById("scrim"), menubtn = document.getElementById("menubtn");
-  function closeNav() { document.body.classList.remove("navopen"); scrim.hidden = true; menubtn.setAttribute("aria-expanded", "false"); }
-  function openNavIfNarrow() { if (window.matchMedia("(max-width: 960px)").matches) { document.body.classList.add("navopen"); scrim.hidden = false; menubtn.setAttribute("aria-expanded", "true"); } }
-  menubtn.addEventListener("click", function () {
-    var open = !document.body.classList.contains("navopen");
-    document.body.classList.toggle("navopen", open); scrim.hidden = !open; menubtn.setAttribute("aria-expanded", String(open));
-  });
+  function closeNav() { document.body.classList.remove("navopen"); scrim.hidden = true; if (menubtn) menubtn.setAttribute("aria-expanded", "false"); }
+  function openNavIfNarrow() { if (menubtn && window.matchMedia("(max-width: 960px)").matches) { document.body.classList.add("navopen"); scrim.hidden = false; menubtn.setAttribute("aria-expanded", "true"); } }
+  if (menubtn) {
+    menubtn.addEventListener("click", function () {
+      var open = !document.body.classList.contains("navopen");
+      document.body.classList.toggle("navopen", open); scrim.hidden = !open; menubtn.setAttribute("aria-expanded", String(open));
+    });
+  }
   scrim.addEventListener("click", closeNav);
 
   // ------------------------------------------------------------ steppable figures
