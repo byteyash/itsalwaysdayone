@@ -1,0 +1,21 @@
+{
+  "name": "It's always day one",
+  "short_name": "Day One",
+  "description": "Practice-first handbooks for DSA, system design, concurrency, and Kafka.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f9f3",
+  "theme_color": "#f6f9f3",
+  "icons": [
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

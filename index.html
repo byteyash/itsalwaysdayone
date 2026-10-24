@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="A growing set of hands-on guides and roadmaps. Try the problem first; the explanation comes after.">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="https://itsalwaysdayone.in/">
 <meta property="og:title" content="It's always day one">
 <meta property="og:description" content="A growing set of hands-on guides and roadmaps. Try the problem first; the explanation comes after.">
 <meta property="og:url" content="https://itsalwaysdayone.in/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://itsalwaysdayone.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://itsalwaysdayone.in/assets/og-image.png">
 <meta name="theme-color" content="#f6f9f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14201b" media="(prefers-color-scheme: dark)">
 <title>It's always day one</title>
@@ -95,7 +103,7 @@ main { flex: 1; }
 @keyframes floaty { from { transform: translateY(0) rotate(0deg); } to { transform: translateY(-20px) rotate(14deg); } }
 @media (prefers-reduced-motion: reduce) { .fshape { animation: none; } }
 .kick { display: inline-flex; align-items: center; gap: 8px; font: 700 12.5px var(--font); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 16px; }
-.kick::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--marker); box-shadow: 0 0 0 3px color-mix(in srgb, var(--marker) 25%, transparent); animation: pulse 2.2s ease-in-out infinite; }
+.kick::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--marker); box-shadow: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--marker) 25%, transparent); animation: pulse 2.2s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
 h1 { margin: 0 0 18px; font-size: clamp(42px, 7.6vw, 84px); line-height: 0.98; letter-spacing: -0.03em; font-weight: 900; text-wrap: balance; font-variation-settings: "CASL" 1, "MONO" 0; }
 h1 .day { display: inline-block; background: linear-gradient(100deg, var(--marker), var(--p4) 60%, var(--p1)); -webkit-background-clip: text; background-clip: text; color: transparent; transition: opacity 0.3s ease, transform 0.3s ease; }
@@ -127,22 +135,22 @@ h1 .day { display: inline-block; background: linear-gradient(100deg, var(--marke
   transform: perspective(700px) rotateX(0) rotateY(0) translateY(0);
   transition: transform 0.35s cubic-bezier(.2,.8,.3,1.1), box-shadow 0.22s ease, border-color 0.22s ease; }
 a.tile { cursor: pointer; }
-a.tile:hover, a.tile:focus-visible { box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent, var(--p1)) 55%, var(--rule)); }
+a.tile:hover, a.tile:focus-visible { box-shadow: var(--shadow-lg); border-color: var(--accent, var(--p1)); border-color: color-mix(in srgb, var(--accent, var(--p1)) 55%, var(--rule)); }
 a.tile:focus-visible { transform: perspective(700px) rotateX(0) rotateY(0) translateY(-5px); }
 .tile::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 5px; background: var(--accent, var(--p1)); }
-.tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent, var(--p1)) 14%, transparent), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: transparent; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent, var(--p1)) 14%, transparent), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
 a.tile:hover::after { opacity: 1; }
 .tile .top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-.tile .tag { font: 700 11.5px var(--font); color: var(--accent, var(--p1)); border: 1px solid color-mix(in srgb, var(--accent, var(--p1)) 45%, var(--surface));
-  background: color-mix(in srgb, var(--accent, var(--p1)) 10%, var(--surface)); padding: 3px 10px; border-radius: 99px; }
+.tile .tag { font: 700 11.5px var(--font); color: var(--accent, var(--p1)); border: 1px solid var(--rule); border: 1px solid color-mix(in srgb, var(--accent, var(--p1)) 45%, var(--surface));
+  background: var(--surface); background: color-mix(in srgb, var(--accent, var(--p1)) 10%, var(--surface)); padding: 3px 10px; border-radius: 99px; }
 .tile .badge { font: 700 11px var(--font); letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); border: 1px dashed var(--rule-2); padding: 3px 9px; border-radius: 99px; }
 .tile .status { display: inline-flex; align-items: center; gap: 5px; font: 700 11px var(--font); padding: 3px 10px; border-radius: 99px; white-space: nowrap; }
 .tile .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; }
 .tile .status.s-none { color: var(--ink-3); border: 1px dashed var(--rule-2); }
 .tile .status.s-none::before { background: var(--ink-3); }
-.tile .status.s-progress { color: var(--accent, var(--p1)); border: 1px solid color-mix(in srgb, var(--accent, var(--p1)) 45%, var(--surface)); background: color-mix(in srgb, var(--accent, var(--p1)) 10%, var(--surface)); }
-.tile .status.s-progress::before { background: var(--accent, var(--p1)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, var(--p1)) 25%, transparent); }
-.tile .status.s-done { color: var(--marker); border: 1px solid color-mix(in srgb, var(--marker) 45%, var(--surface)); background: color-mix(in srgb, var(--marker) 14%, var(--surface)); }
+.tile .status.s-progress { color: var(--accent, var(--p1)); border: 1px solid var(--rule); border: 1px solid color-mix(in srgb, var(--accent, var(--p1)) 45%, var(--surface)); background: var(--surface); background: color-mix(in srgb, var(--accent, var(--p1)) 10%, var(--surface)); }
+.tile .status.s-progress::before { background: var(--accent, var(--p1)); box-shadow: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, var(--p1)) 25%, transparent); }
+.tile .status.s-done { color: var(--marker); border: 1px solid var(--rule); border: 1px solid color-mix(in srgb, var(--marker) 45%, var(--surface)); background: var(--surface); background: color-mix(in srgb, var(--marker) 14%, var(--surface)); }
 .tile .status.s-done::before { background: var(--marker); }
 .tile .ptrack { height: 5px; border-radius: 99px; background: var(--sunk); overflow: hidden; }
 .tile .pfill { display: block; height: 100%; width: 0%; background: var(--accent, var(--marker)); border-radius: 99px; transition: width 0.7s cubic-bezier(.2,.8,.2,1); }
