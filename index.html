@@ -44,9 +44,14 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; color: var(--ink); font: 17px/1.6 var(--font);
   font-variation-settings: "CASL" 0, "MONO" 0; background-color: var(--board);
   background-image: linear-gradient(var(--dot) 1px, transparent 1px), linear-gradient(90deg, var(--dot) 1px, transparent 1px);
-  background-size: 28px 28px; background-position: -1px -1px; }
+  background-size: 28px 28px; background-position: -1px -1px; transition: opacity 0.18s ease; }
+body.leaving { opacity: 0; }
 a { color: var(--marker); }
 :focus-visible { outline: 2px solid var(--marker); outline-offset: 3px; border-radius: 6px; }
+.progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; z-index: 60; pointer-events: none;
+  background: linear-gradient(90deg, var(--p1), var(--marker), var(--p3)); transition: width 0.08s linear; }
+.grain { position: fixed; inset: 0; z-index: 55; pointer-events: none; opacity: 0.045; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
 
 /* header */
@@ -86,11 +91,19 @@ h1 .day { display: inline-block; background: linear-gradient(100deg, var(--marke
 .stat-strip li { min-width: 86px; }
 .stat-strip b { display: block; font-size: clamp(26px, 3.4vw, 34px); font-weight: 900; letter-spacing: -0.02em; font-variation-settings: "CASL" 1, "MONO" 1; font-variant-numeric: tabular-nums; color: var(--ink); }
 .stat-strip span { font-size: 13px; color: var(--ink-3); }
+.scrollcue { display: inline-flex; align-items: center; gap: 8px; margin: 30px 0 0; color: var(--ink-3); text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; transition: color 0.15s ease; }
+.scrollcue svg { width: 14px; height: 14px; animation: bob 1.6s ease-in-out infinite; }
+.scrollcue:hover { color: var(--marker); }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 
 /* reveal on scroll */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; transition-delay: calc(var(--d, 0) * 70ms); }
 .reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .orb { transition: none; } .kick::before { animation: none; } html { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .orb { transition: none; } .kick::before { animation: none; } html { scroll-behavior: auto; }
+  .scrollcue svg { animation: none; } .progress { transition: none; } body { transition: none; }
+}
 
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
 .section-head h2 { margin: 0; font-size: clamp(20px, 2.6vw, 25px); font-weight: 800; letter-spacing: -0.01em; font-variation-settings: "CASL" 1, "MONO" 0; }
@@ -137,6 +150,8 @@ footer a:hover { color: var(--marker); }
 </style>
 </head>
 <body>
+<div class="progress" id="progressBar" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 <header class="top"><div class="wrap">
   <a class="brand" href="/"><img src="/assets/favicon.svg" width="26" height="26" alt="">It's always day one</a>
   <div class="navgroup">
@@ -160,6 +175,7 @@ footer a:hover { color: var(--marker); }
       <li><b data-count="460">0</b><span>hands-on exercises</span></li>
       <li><b>Free</b><span>no sign-up</span></li>
     </ul>
+    <a class="scrollcue" href="#topics">Explore the topics<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
   </div></section>
 
   <section class="wrap topics" id="topics" aria-label="Topics">
@@ -238,6 +254,43 @@ footer a:hover { color: var(--marker); }
   }
 
   var reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hoverCapable = matchMedia("(hover: hover)").matches;
+
+  var progressBar = document.getElementById("progressBar");
+  if (progressBar) {
+    var updateProgress = function () {
+      var el = document.documentElement;
+      var scrollable = el.scrollHeight - el.clientHeight;
+      var pct = scrollable > 0 ? (el.scrollTop / scrollable) * 100 : 0;
+      progressBar.style.width = pct + "%";
+    };
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  if (!reduceMotion && hoverCapable) {
+    document.querySelectorAll(".navlink, .themebtn").forEach(function (el) {
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        var mx = e.clientX - (r.left + r.width / 2);
+        var my = e.clientY - (r.top + r.height / 2);
+        el.style.transform = "translate(" + (mx * 0.18).toFixed(1) + "px," + (my * 0.18).toFixed(1) + "px)";
+      });
+      el.addEventListener("mouseleave", function () { el.style.transform = ""; });
+    });
+  }
+
+  if (!reduceMotion) {
+    document.querySelectorAll("a.tile[href]").forEach(function (tile) {
+      tile.addEventListener("click", function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        var href = tile.getAttribute("href");
+        e.preventDefault();
+        document.body.classList.add("leaving");
+        setTimeout(function () { window.location.href = href; }, 160);
+      });
+    });
+  }
 
   var reveals = document.querySelectorAll(".reveal");
   if (reduceMotion || !("IntersectionObserver" in window)) {
@@ -294,7 +347,7 @@ footer a:hover { color: var(--marker); }
   });
 
   var orbs = document.querySelectorAll(".orb");
-  if (orbs.length && !reduceMotion && matchMedia("(hover: hover)").matches) {
+  if (orbs.length && !reduceMotion && hoverCapable) {
     var target = { x: 0, y: 0 }, pos = { x: 0, y: 0 };
     window.addEventListener("pointermove", function (e) {
       target.x = (e.clientX / window.innerWidth - 0.5);
