@@ -163,20 +163,6 @@ a.tile:hover::after { opacity: 1; }
 .tile .go { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; font-weight: 700; font-size: 14.5px; color: var(--accent, var(--marker)); }
 .tile .go span { transition: transform 0.2s ease; display: inline-block; }
 a.tile:hover .go span { transform: translateX(4px); }
-.tile-split { padding: 0; gap: 0; }
-a.tile-link { display: flex; flex-direction: column; gap: 12px; padding: 24px 24px 18px; text-decoration: none; color: inherit; position: relative; }
-a.tile-link:hover .go span { transform: translateX(4px); }
-a.tile-link:hover h3 { color: var(--accent, var(--p1)); }
-.subtiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); border-top: 1px solid var(--rule); }
-a.subtile { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; background: var(--surface); text-decoration: none; color: inherit; transition: background 0.15s ease; }
-a.subtile:hover, a.subtile:focus-visible { background: var(--sunk); background: color-mix(in srgb, var(--accent, var(--p1)) 10%, var(--surface)); }
-.subtile-name { font-size: 12.5px; font-weight: 700; color: var(--ink); }
-.subtile-status { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 600; color: var(--ink-3); }
-.subtile-status::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); flex: none; }
-.subtile-status.s-progress { color: var(--accent, var(--p1)); }
-.subtile-status.s-progress::before { background: var(--accent, var(--p1)); }
-.subtile-status.s-done { color: var(--marker); }
-.subtile-status.s-done::before { background: var(--marker); }
 .tile.add { align-items: center; justify-content: center; text-align: center; border-style: dashed; background: transparent; box-shadow: none; gap: 6px; min-height: 180px; }
 .tile.add:hover { transform: none; box-shadow: none; border-color: var(--marker); color: var(--marker); }
 .tile.add::before { display: none; }
@@ -262,30 +248,14 @@ footer a:hover { color: var(--marker); }
         <span class="go">Open the handbook <span aria-hidden="true">&rarr;</span></span>
       </a>
 
-      <div class="tile tile-split reveal" style="--accent:var(--p4); --d:3">
-        <a class="tile-link" href="/concurrency/" data-lskey="sde2-java-concurrency-handbook-v1" data-total="153">
-          <div class="top-row"><span class="tag">Java</span><span class="status s-none">Not started</span></div>
-          <h3>Java Concurrency Handbook</h3>
-          <p>From the memory model to executors, locks, and production hazards, with 10 hands-on labs along the way.</p>
-          <ul class="stats"><li><b>15</b> modules</li><li><b>10</b> labs</li><li><b>4</b> phases</li></ul>
-          <span class="ptrack"><span class="pfill"></span></span>
-          <span class="go">Open the handbook <span aria-hidden="true">&rarr;</span></span>
-        </a>
-        <div class="subtiles">
-          <a class="subtile" href="/concurrency/foundations/" data-lskey="sde2-java-concurrency-handbook-v1" data-prefix="m01,m02,m03,m04,m05" data-total="51">
-            <span class="subtile-name">Foundations</span><span class="subtile-status s-none">Not started</span>
-          </a>
-          <a class="subtile" href="/concurrency/toolkit/" data-lskey="sde2-java-concurrency-handbook-v1" data-prefix="m06,m07,m08,m09,m10" data-total="53">
-            <span class="subtile-name">The j.u.c toolkit</span><span class="subtile-status s-none">Not started</span>
-          </a>
-          <a class="subtile" href="/concurrency/hazards/" data-lskey="sde2-java-concurrency-handbook-v1" data-prefix="m11,m12,m13" data-total="28">
-            <span class="subtile-name">Hazards</span><span class="subtile-status s-none">Not started</span>
-          </a>
-          <a class="subtile" href="/concurrency/production/" data-lskey="sde2-java-concurrency-handbook-v1" data-prefix="m14,m15" data-total="21">
-            <span class="subtile-name">Production</span><span class="subtile-status s-none">Not started</span>
-          </a>
-        </div>
-      </div>
+      <a class="tile reveal" style="--accent:var(--p4); --d:3" href="/concurrency/" data-lskey="sde2-java-concurrency-handbook-v1" data-total="153">
+        <div class="top-row"><span class="tag">Java</span><span class="status s-none">Not started</span></div>
+        <h3>Java Concurrency Handbook</h3>
+        <p>From the memory model to executors, locks, and production hazards, with 10 hands-on labs along the way.</p>
+        <ul class="stats"><li><b>15</b> modules</li><li><b>10</b> labs</li><li><b>4</b> phases</li></ul>
+        <span class="ptrack"><span class="pfill"></span></span>
+        <span class="go">Open the handbook <span aria-hidden="true">&rarr;</span></span>
+      </a>
 
       <a class="tile reveal" style="--accent:var(--p6); --d:4" href="/kafka/" data-lskey="kafka-sde2-handbook-v1" data-total="208">
         <div class="top-row"><span class="tag">Event Streaming</span><span class="status s-none">Not started</span></div>
@@ -355,7 +325,7 @@ footer a:hover { color: var(--marker); }
   }
 
   if (!reduceMotion) {
-    document.querySelectorAll("a.tile[href], a.tile-link[href], a.subtile[href]").forEach(function (tile) {
+    document.querySelectorAll("a.tile[href]").forEach(function (tile) {
       tile.addEventListener("click", function (e) {
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
         var href = tile.getAttribute("href");
@@ -381,7 +351,7 @@ footer a:hover { color: var(--marker); }
       return Math.max(0, Math.min(100, Math.round((done / total) * 100)));
     } catch (e) { return 0; }
   }
-  document.querySelectorAll("a.tile[data-lskey], a.tile-link[data-lskey]").forEach(function (tile) {
+  document.querySelectorAll("a.tile[data-lskey]").forEach(function (tile) {
     var pct = readHandbookProgress(tile.getAttribute("data-lskey"), parseInt(tile.getAttribute("data-total"), 10));
     var statusEl = tile.querySelector(".status");
     var fillEl = tile.querySelector(".pfill");
@@ -390,35 +360,6 @@ footer a:hover { color: var(--marker); }
       if (pct <= 0) { statusEl.textContent = "Not started"; statusEl.className = "status s-none"; }
       else if (pct >= 100) { statusEl.textContent = "Complete"; statusEl.className = "status s-done"; }
       else { statusEl.textContent = pct + "% complete"; statusEl.className = "status s-progress"; }
-    }
-  });
-
-  function readPhaseProgress(lskey, prefixesCsv, total) {
-    if (!total) return 0;
-    try {
-      var raw = localStorage.getItem(lskey);
-      if (!raw) return 0;
-      var state = JSON.parse(raw);
-      var k = state && state.k;
-      if (!k) return 0;
-      var prefixes = prefixesCsv.split(",").map(function (p) { return "l:" + p + "-"; });
-      var done = 0;
-      for (var key in k) {
-        if (!Object.prototype.hasOwnProperty.call(k, key) || !k[key] || !k[key].v) continue;
-        for (var i = 0; i < prefixes.length; i++) {
-          if (key.indexOf(prefixes[i]) === 0) { done++; break; }
-        }
-      }
-      return Math.max(0, Math.min(100, Math.round((done / total) * 100)));
-    } catch (e) { return 0; }
-  }
-  document.querySelectorAll("a.subtile[data-lskey]").forEach(function (tile) {
-    var pct = readPhaseProgress(tile.getAttribute("data-lskey"), tile.getAttribute("data-prefix"), parseInt(tile.getAttribute("data-total"), 10));
-    var statusEl = tile.querySelector(".subtile-status");
-    if (statusEl) {
-      if (pct <= 0) { statusEl.textContent = "Not started"; statusEl.className = "subtile-status s-none"; }
-      else if (pct >= 100) { statusEl.textContent = "Complete"; statusEl.className = "subtile-status s-done"; }
-      else { statusEl.textContent = pct + "% complete"; statusEl.className = "subtile-status s-progress"; }
     }
   });
 
