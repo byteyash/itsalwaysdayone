@@ -72,15 +72,15 @@ main { flex: 1; }
 /* hero */
 .hero { position: relative; padding: clamp(56px, 11vw, 112px) 0 clamp(40px, 6vw, 60px); overflow: clip; }
 .orbs { position: absolute; inset: -20% -10% auto -10%; height: 640px; z-index: -1; pointer-events: none; filter: blur(60px); opacity: 0.55; }
-.orb { position: absolute; border-radius: 50%; animation: drift 22s ease-in-out infinite alternate; }
+.orb { position: absolute; border-radius: 50%; will-change: transform; transition: transform 0.2s linear; }
 .orb.o1 { width: 420px; height: 420px; left: 2%; top: 4%; background: radial-gradient(circle, var(--p1), transparent 70%); }
-.orb.o2 { width: 360px; height: 360px; right: 4%; top: -4%; background: radial-gradient(circle, var(--p3), transparent 70%); animation-delay: -7s; animation-direction: alternate-reverse; }
-.orb.o3 { width: 300px; height: 300px; left: 38%; top: 20%; background: radial-gradient(circle, var(--p4), transparent 70%); animation-delay: -13s; }
-@keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(24px, -18px) scale(1.06); } }
+.orb.o2 { width: 360px; height: 360px; right: 4%; top: -4%; background: radial-gradient(circle, var(--p3), transparent 70%); }
+.orb.o3 { width: 300px; height: 300px; left: 38%; top: 20%; background: radial-gradient(circle, var(--p4), transparent 70%); }
 .kick { display: inline-flex; align-items: center; gap: 8px; font: 700 12.5px var(--font); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 16px; }
-.kick::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--marker); box-shadow: 0 0 0 3px color-mix(in srgb, var(--marker) 25%, transparent); }
+.kick::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--marker); box-shadow: 0 0 0 3px color-mix(in srgb, var(--marker) 25%, transparent); animation: pulse 2.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
 h1 { margin: 0 0 18px; font-size: clamp(42px, 7.6vw, 84px); line-height: 0.98; letter-spacing: -0.03em; font-weight: 900; text-wrap: balance; font-variation-settings: "CASL" 1, "MONO" 0; }
-h1 .day { background: linear-gradient(100deg, var(--marker), var(--p4) 60%, var(--p1)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+h1 .day { display: inline-block; background: linear-gradient(100deg, var(--marker), var(--p4) 60%, var(--p1)); -webkit-background-clip: text; background-clip: text; color: transparent; transition: opacity 0.3s ease, transform 0.3s ease; }
 .lede { max-width: 36rem; margin: 0 0 36px; font-size: clamp(18px, 2.2vw, 21px); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
 .stat-strip { display: flex; flex-wrap: wrap; gap: 28px 44px; margin: 0; padding: 22px 0 0; border-top: 1px dashed var(--rule-2); list-style: none; max-width: 680px; }
 .stat-strip li { min-width: 86px; }
@@ -90,7 +90,7 @@ h1 .day { background: linear-gradient(100deg, var(--marker), var(--p4) 60%, var(
 /* reveal on scroll */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; transition-delay: calc(var(--d, 0) * 70ms); }
 .reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .orb { animation: none; } html { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .orb { transition: none; } .kick::before { animation: none; } html { scroll-behavior: auto; } }
 
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
 .section-head h2 { margin: 0; font-size: clamp(20px, 2.6vw, 25px); font-weight: 800; letter-spacing: -0.01em; font-variation-settings: "CASL" 1, "MONO" 0; }
@@ -98,9 +98,11 @@ h1 .day { background: linear-gradient(100deg, var(--marker), var(--p4) 60%, var(
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; padding-bottom: 20px; }
 .tile { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 24px 24px 22px; border: 1px solid var(--rule);
   border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; text-decoration: none; color: inherit;
-  transition: transform 0.22s cubic-bezier(.2,.8,.3,1.1), box-shadow 0.22s ease, border-color 0.22s ease; }
+  transform: perspective(700px) rotateX(0) rotateY(0) translateY(0);
+  transition: transform 0.35s cubic-bezier(.2,.8,.3,1.1), box-shadow 0.22s ease, border-color 0.22s ease; }
 a.tile { cursor: pointer; }
-a.tile:hover, a.tile:focus-visible { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent, var(--p1)) 55%, var(--rule)); }
+a.tile:hover, a.tile:focus-visible { box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent, var(--p1)) 55%, var(--rule)); }
+a.tile:focus-visible { transform: perspective(700px) rotateX(0) rotateY(0) translateY(-5px); }
 .tile::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 5px; background: var(--accent, var(--p1)); }
 .tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent, var(--p1)) 14%, transparent), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
 a.tile:hover::after { opacity: 1; }
@@ -150,7 +152,7 @@ footer a:hover { color: var(--marker); }
   <section class="hero"><div class="wrap">
     <div class="orbs" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div>
     <p class="kick">A growing set of hands-on guides</p>
-    <h1>Learn it by <span class="day">doing it.</span></h1>
+    <h1>Learn it by <span class="day" id="rotWord">doing it.</span></h1>
     <p class="lede">A personal hub of topics and roadmaps &mdash; each one starts with a problem to try, not a wall of theory. The explanation comes after, when you actually want it.</p>
     <ul class="stat-strip">
       <li><b data-count="5">0</b><span>handbooks</span></li>
@@ -278,10 +280,59 @@ footer a:hover { color: var(--marker); }
   document.querySelectorAll("a.tile").forEach(function (tile) {
     tile.addEventListener("mousemove", function (e) {
       var r = tile.getBoundingClientRect();
-      tile.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
-      tile.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
+      var mx = (e.clientX - r.left) / r.width;
+      var my = (e.clientY - r.top) / r.height;
+      tile.style.setProperty("--mx", (mx * 100) + "%");
+      tile.style.setProperty("--my", (my * 100) + "%");
+      if (!reduceMotion) {
+        var rx = (my - 0.5) * -9;
+        var ry = (mx - 0.5) * 11;
+        tile.style.transform = "perspective(700px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) translateY(-5px)";
+      }
     });
+    tile.addEventListener("mouseleave", function () { tile.style.transform = ""; });
   });
+
+  var orbs = document.querySelectorAll(".orb");
+  if (orbs.length && !reduceMotion && matchMedia("(hover: hover)").matches) {
+    var target = { x: 0, y: 0 }, pos = { x: 0, y: 0 };
+    window.addEventListener("pointermove", function (e) {
+      target.x = (e.clientX / window.innerWidth - 0.5);
+      target.y = (e.clientY / window.innerHeight - 0.5);
+    }, { passive: true });
+    var t0 = performance.now();
+    (function loop(now) {
+      pos.x += (target.x - pos.x) * 0.05;
+      pos.y += (target.y - pos.y) * 0.05;
+      var dt = (now - t0) / 1000;
+      orbs.forEach(function (orb, i) {
+        var depth = (i + 1) * 16;
+        var sx = Math.sin(dt * 0.25 + i * 2.1) * 14;
+        var sy = Math.cos(dt * 0.2 + i * 1.4) * 14;
+        orb.style.transform = "translate3d(" + (pos.x * depth + sx).toFixed(1) + "px," + (pos.y * depth + sy).toFixed(1) + "px,0)";
+      });
+      requestAnimationFrame(loop);
+    })(t0);
+  }
+
+  var rotWord = document.getElementById("rotWord");
+  if (rotWord && !reduceMotion) {
+    var words = ["doing it.", "solving it.", "shipping it.", "debugging it."];
+    var wi = 0;
+    setInterval(function () {
+      wi = (wi + 1) % words.length;
+      rotWord.style.opacity = "0";
+      rotWord.style.transform = "translateY(6px)";
+      setTimeout(function () {
+        rotWord.textContent = words[wi];
+        rotWord.style.transform = "translateY(-6px)";
+        requestAnimationFrame(function () {
+          rotWord.style.opacity = "1";
+          rotWord.style.transform = "translateY(0)";
+        });
+      }, 300);
+    }, 2800);
+  }
 })();
 </script>
 </body>
