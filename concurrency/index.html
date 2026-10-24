@@ -105,6 +105,7 @@ a:hover { text-decoration-thickness: 2px; }
 .shell { flex: 1; min-height: 0; display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); }
 .shell.no-rail { grid-template-columns: minmax(0, 1fr); max-width: 980px; margin: 0 auto; width: 100%; }
 .hubnav { display: flex; flex-wrap: wrap; gap: 8px; max-width: 1240px; margin: 0 auto; padding: 14px clamp(16px, 4vw, 48px) 0; }
+#main:has(> #v-home:not([hidden])) .hubnav { display: none; }
 .hubnav a.btn.small { color: var(--ink-2); }
 .hubnav a.btn.small:hover { color: var(--ink); border-color: var(--rule); }
 .rail { min-height: 0; overflow-y: auto; overscroll-behavior: contain; background: var(--wall); border-right: 1px solid var(--rule);
@@ -945,7 +946,7 @@ svg.fig.spast { display: none; }
   </nav>
   <main id="main">
 <div class="hubnav"><a class="btn small" href="#home">&larr; Overview</a><a class="btn small" href="#l01">Labs</a><a class="btn small" href="#cheats">Cheat sheet</a><a class="btn small" href="#interview">Interview drill</a><a class="btn small" href="#glossary">Glossary</a><a class="btn small" href="#tracker">Tracker</a><a class="btn small" href="#ready">Readiness check</a></div>
-<section class="view hue ph0" id="v-home" data-view="home" data-phase="0" data-group="Start" data-kind="page" data-h="165" style="--h:165" hidden><div class="vgrid hasside"><div class="vbody"><div class="hhero"><h1>Java Concurrency Handbook</h1><p class="lede">Java concurrency from your first thread to SDE-2 production work, in 15 modules and 10 hands-on labs. Every lesson opens with a question to try, every flow diagram steps through, every Java sample on these pages compiles and runs on Java 21, and a practice tracker brings each exercise back for spaced review.</p><div class="hactions"><a class="btn primary" id="continue" href="/concurrency/foundations/#m01">Start with Module 1: Threads and tasks</a><a class="btn" href="#l01">Go to the labs</a><a class="btn" href="#cheats">Open the cheat sheet</a></div></div><h2>Study in four parts</h2><p>Each phase is its own page, so you only load what you are studying right now.</p><div class="phase-grid" id="phasecards"></div><h2>Labs and reference</h2><p>Shared across every phase, so they stay here on the handbook's home page.</p><div class="phase-grid" id="toolcards"><a class="phase-card hue" style="--h:262" href="#l01"><div class="pc-top"><span class="pc-name">Labs</span><span class="pc-pct" id="labspct"></span></div><span class="pc-meta">10 hands-on labs: counters, caches, bulkheads, rate limiters, and a capstone job runner.</span><span class="bar"><i id="labsbar"></i></span><span class="pc-count" id="labscount"></span></a><div class="phase-card ref-card hue" style="--h:35"><div class="pc-top"><span class="pc-name">Reference</span></div><span class="pc-meta">Quick lookups while you work.</span><ul class="ref-links"><li><a href="#cheats">Cheat sheet</a></li><li><a href="#interview">Interview drill</a></li><li><a href="#glossary">Glossary</a></li></ul></div><div class="phase-card ref-card hue" style="--h:210"><div class="pc-top"><span class="pc-name">Plan</span></div><span class="pc-meta">Track where you stand.</span><ul class="ref-links"><li><a href="#tracker">Practice tracker</a></li><li><a href="#ready">SDE-2 readiness check</a></li></ul></div></div><div class="dash" id="dashboard"><p class="empty">Loading your progress.</p></div><h2 id="home-how-this-handbook-teaches">How this handbook teaches</h2>
+<section class="view hue ph0" id="v-home" data-view="home" data-phase="0" data-group="Start" data-kind="page" data-h="165" style="--h:165" hidden><div class="vgrid hasside"><div class="vbody"><div class="hhero"><h1>Java Concurrency Handbook</h1><p class="lede">Java concurrency from your first thread to SDE-2 production work, in 15 modules and 10 hands-on labs. Every lesson opens with a question to try, every flow diagram steps through, every Java sample on these pages compiles and runs on Java 21, and a practice tracker brings each exercise back for spaced review.</p><div class="hactions"><a class="btn primary" id="continue" href="/concurrency/foundations/#m01">Start with Module 1: Threads and tasks</a><a class="btn" href="#l01">Go to the labs</a><a class="btn" href="#cheats">Open the cheat sheet</a></div></div><h2>Study in four parts</h2><p>Each phase is its own page, so you only load what you are studying right now.</p><div class="phase-grid" id="phasecards"></div><h2>Labs and reference</h2><p>Shared across every phase, so they stay here on the handbook's home page.</p><div class="phase-grid" id="toolcards"><a class="phase-card hue" style="--h:175" href="#l01"><div class="pc-top"><span class="pc-name">Labs</span><span class="pc-pct" id="labspct"></span></div><span class="pc-meta">10 hands-on labs: counters, caches, bulkheads, rate limiters, and a capstone job runner.</span><span class="bar"><i id="labsbar"></i></span><span class="pc-count" id="labscount"></span></a><div class="phase-card ref-card hue" style="--h:35"><div class="pc-top"><span class="pc-name">Reference</span></div><span class="pc-meta">Quick lookups while you work.</span><ul class="ref-links"><li><a href="#cheats">Cheat sheet</a></li><li><a href="#interview">Interview drill</a></li><li><a href="#glossary">Glossary</a></li></ul></div><div class="phase-card ref-card hue" style="--h:210"><div class="pc-top"><span class="pc-name">Plan</span></div><span class="pc-meta">Track where you stand.</span><ul class="ref-links"><li><a href="#tracker">Practice tracker</a></li><li><a href="#ready">SDE-2 readiness check</a></li></ul></div></div><div class="dash" id="dashboard"><p class="empty">Loading your progress.</p></div><h2 id="home-how-this-handbook-teaches">How this handbook teaches</h2>
 <p>The goal is not to memorize APIs. It is to look at any piece of concurrent code and answer three questions: <strong>which data is shared, what can interleave, and what guarantees the ordering</strong>. So the handbook asks you to think before it explains.</p>
 <ul>
 <li><strong>Try before you read.</strong> Every lesson opens with a short question. Answer it first, on paper or in your head. Getting it wrong is what makes the explanation stick.</li>
@@ -2891,13 +2892,19 @@ var MODULE_URL = {"home": "/concurrency/", "map": "/concurrency/", "m01": "/conc
   function renderDashboard() {
     var host = document.getElementById("dashboard");
     if (!host) return;
-    var lessons = document.querySelectorAll("input.lchk"), lDone = 0;
-    lessons.forEach(function (c) { if (checked("l:" + c.getAttribute("data-l"))) lDone++; });
+    var lessons = document.querySelectorAll("input.lchk"), lDone = 0, lTotal;
+    if (lessons.length) {
+      lessons.forEach(function (c) { if (checked("l:" + c.getAttribute("data-l"))) lDone++; });
+      lTotal = lessons.length;
+    } else {
+      lTotal = Object.keys(LESSON_COUNT).reduce(function (s, k) { return s + LESSON_COUNT[k]; }, 0);
+      Object.keys(state.k).forEach(function (k) { if (k.indexOf("l:") === 0 && state.k[k] && state.k[k].v) lDone++; });
+    }
     var cdone = 0, tried = 0;
     ITEM_LIST.forEach(function (it) { var s = statusOf(it.id); if (isDone(s) && it.k === "lab") cdone++; if (s > 0) tried++; });
     var due = dueList();
     var h = '<div class="statline">' +
-      stat(lDone, "of " + lessons.length + " lessons studied", "") +
+      stat(lDone, "of " + lTotal + " lessons studied", "") +
       stat(cdone, "of " + CASES.length + " labs solved independently", "") +
       stat(tried, "exercises attempted, of " + ITEM_LIST.length + " in the practice list", "") +
       stat(due.length, due.length === 1 ? "exercise due for review" : "exercises due for review", "due" + (due.length ? "" : " zero")) + "</div>";
