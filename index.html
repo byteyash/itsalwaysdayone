@@ -74,13 +74,26 @@ header.top .wrap { display: flex; align-items: center; justify-content: space-be
 
 main { flex: 1; }
 
+/* ambient background wash, fixed behind the whole page */
+.orbs { position: fixed; inset: 0; z-index: -1; pointer-events: none; filter: blur(64px); opacity: 0.7; }
+.orb { position: absolute; border-radius: 50%; will-change: transform; transition: transform 0.2s linear; }
+.orb.o1 { width: 440px; height: 440px; left: 3%; top: 6%; background: radial-gradient(circle, var(--p1), transparent 70%); }
+.orb.o2 { width: 380px; height: 380px; right: 6%; top: 0%; background: radial-gradient(circle, var(--p3), transparent 70%); }
+.orb.o3 { width: 320px; height: 320px; left: 40%; top: 30%; background: radial-gradient(circle, var(--p4), transparent 70%); }
+.orb.o4 { width: 360px; height: 360px; right: 14%; bottom: 4%; background: radial-gradient(circle, var(--p6), transparent 70%); }
+.orb.o5 { width: 300px; height: 300px; left: 8%; bottom: 10%; background: radial-gradient(circle, var(--p2), transparent 70%); }
+
 /* hero */
 .hero { position: relative; padding: clamp(56px, 11vw, 112px) 0 clamp(40px, 6vw, 60px); overflow: clip; }
-.orbs { position: absolute; inset: -20% -10% auto -10%; height: 640px; z-index: -1; pointer-events: none; filter: blur(60px); opacity: 0.55; }
-.orb { position: absolute; border-radius: 50%; will-change: transform; transition: transform 0.2s linear; }
-.orb.o1 { width: 420px; height: 420px; left: 2%; top: 4%; background: radial-gradient(circle, var(--p1), transparent 70%); }
-.orb.o2 { width: 360px; height: 360px; right: 4%; top: -4%; background: radial-gradient(circle, var(--p3), transparent 70%); }
-.orb.o3 { width: 300px; height: 300px; left: 38%; top: 20%; background: radial-gradient(circle, var(--p4), transparent 70%); }
+.float-shapes { position: absolute; inset: 0; pointer-events: none; z-index: 0; display: none; }
+@media (min-width: 900px) { .float-shapes { display: block; } }
+.fshape { position: absolute; left: var(--fx); top: var(--fy); border: 2px solid var(--fc); opacity: 0.32; animation: floaty var(--fd, 10s) ease-in-out infinite alternate; }
+.fshape.circle { width: 22px; height: 22px; border-radius: 50%; }
+.fshape.circle.sm { width: 13px; height: 13px; }
+.fshape.square { width: 18px; height: 18px; border-radius: 5px; transform: rotate(18deg); }
+.fshape.tri { width: 0; height: 0; border: none; opacity: 0.28; border-left: 11px solid transparent; border-right: 11px solid transparent; border-bottom: 18px solid var(--fc); }
+@keyframes floaty { from { transform: translateY(0) rotate(0deg); } to { transform: translateY(-20px) rotate(14deg); } }
+@media (prefers-reduced-motion: reduce) { .fshape { animation: none; } }
 .kick { display: inline-flex; align-items: center; gap: 8px; font: 700 12.5px var(--font); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 16px; }
 .kick::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--marker); box-shadow: 0 0 0 3px color-mix(in srgb, var(--marker) 25%, transparent); animation: pulse 2.2s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
@@ -150,6 +163,7 @@ footer a:hover { color: var(--marker); }
 </style>
 </head>
 <body>
+<div class="orbs" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span><span class="orb o4"></span><span class="orb o5"></span></div>
 <div class="progress" id="progressBar" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 <header class="top"><div class="wrap">
@@ -165,7 +179,13 @@ footer a:hover { color: var(--marker); }
 </div></header>
 <main>
   <section class="hero"><div class="wrap">
-    <div class="orbs" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div>
+    <div class="float-shapes" aria-hidden="true">
+      <span class="fshape circle" style="--fx:4%; --fy:10%; --fc:var(--p2); --fd:9s"></span>
+      <span class="fshape square" style="--fx:93%; --fy:8%; --fc:var(--p3); --fd:11s"></span>
+      <span class="fshape circle sm" style="--fx:88%; --fy:48%; --fc:var(--p6); --fd:7.5s"></span>
+      <span class="fshape tri" style="--fx:3%; --fy:58%; --fc:var(--p4); --fd:12.5s"></span>
+      <span class="fshape square" style="--fx:50%; --fy:4%; --fc:var(--p1); --fd:8.5s"></span>
+    </div>
     <p class="kick">A growing set of hands-on guides</p>
     <h1>Learn it by <span class="day" id="rotWord">doing it.</span></h1>
     <p class="lede">A personal hub of topics and roadmaps &mdash; each one starts with a problem to try, not a wall of theory. The explanation comes after, when you actually want it.</p>
