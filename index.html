@@ -136,6 +136,17 @@ a.tile:hover::after { opacity: 1; }
 .tile .tag { font: 700 11.5px var(--font); color: var(--accent, var(--p1)); border: 1px solid color-mix(in srgb, var(--accent, var(--p1)) 45%, var(--surface));
   background: color-mix(in srgb, var(--accent, var(--p1)) 10%, var(--surface)); padding: 3px 10px; border-radius: 99px; }
 .tile .badge { font: 700 11px var(--font); letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); border: 1px dashed var(--rule-2); padding: 3px 9px; border-radius: 99px; }
+.tile .status { display: inline-flex; align-items: center; gap: 5px; font: 700 11px var(--font); padding: 3px 10px; border-radius: 99px; white-space: nowrap; }
+.tile .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; }
+.tile .status.s-none { color: var(--ink-3); border: 1px dashed var(--rule-2); }
+.tile .status.s-none::before { background: var(--ink-3); }
+.tile .status.s-progress { color: var(--accent, var(--p1)); border: 1px solid color-mix(in srgb, var(--accent, var(--p1)) 45%, var(--surface)); background: color-mix(in srgb, var(--accent, var(--p1)) 10%, var(--surface)); }
+.tile .status.s-progress::before { background: var(--accent, var(--p1)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, var(--p1)) 25%, transparent); }
+.tile .status.s-done { color: var(--marker); border: 1px solid color-mix(in srgb, var(--marker) 45%, var(--surface)); background: color-mix(in srgb, var(--marker) 14%, var(--surface)); }
+.tile .status.s-done::before { background: var(--marker); }
+.tile .ptrack { height: 5px; border-radius: 99px; background: var(--sunk); overflow: hidden; }
+.tile .pfill { display: block; height: 100%; width: 0%; background: var(--accent, var(--marker)); border-radius: 99px; transition: width 0.7s cubic-bezier(.2,.8,.2,1); }
+@media (prefers-reduced-motion: reduce) { .tile .pfill { transition: none; } }
 .tile h3 { margin: 0; font-size: clamp(21px, 2.6vw, 25px); line-height: 1.15; letter-spacing: -0.01em; font-weight: 800; font-variation-settings: "CASL" 1, "MONO" 0; }
 .tile p { margin: 0; color: var(--ink-2); font-size: 15px; flex: 1; }
 .tile .stats { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; padding: 0; list-style: none; }
@@ -202,43 +213,48 @@ footer a:hover { color: var(--marker); }
     <div class="section-head"><h2>Topics</h2><span class="count">5 live &middot; more on the way</span></div>
     <div class="grid">
 
-      <a class="tile reveal" style="--accent:var(--p1); --d:0" href="/dsa/">
-        <div class="top-row"><span class="tag">Java 17 and 21</span></div>
+      <a class="tile reveal" style="--accent:var(--p1); --d:0" href="/dsa/" data-lskey="sde2-dsa-handbook-v1" data-total="90">
+        <div class="top-row"><span class="tag">Java 17 and 21</span><span class="status s-none">Not started</span></div>
         <h3>SDE-2 DSA Handbook</h3>
         <p>From complexity analysis to dynamic programming in 17 modules, built for coding interviews and for the everyday engineering behind them.</p>
         <ul class="stats"><li><b>17</b> modules</li><li><b>90</b> lessons</li><li><b>407</b> problems</li></ul>
+        <span class="ptrack"><span class="pfill"></span></span>
         <span class="go">Open the handbook <span aria-hidden="true">&rarr;</span></span>
       </a>
 
-      <a class="tile reveal" style="--accent:var(--p3); --d:1" href="/hld/">
-        <div class="top-row"><span class="tag">System Design</span></div>
+      <a class="tile reveal" style="--accent:var(--p3); --d:1" href="/hld/" data-lskey="sde2-hld-handbook-v1" data-total="152">
+        <div class="top-row"><span class="tag">System Design</span><span class="status s-none">Not started</span></div>
         <h3>SDE-2 HLD Handbook</h3>
         <p>Scaling, partitioning, consistency, and async workflows, worked through 16 real system-design case studies.</p>
         <ul class="stats"><li><b>17</b> modules</li><li><b>16</b> case studies</li><li><b>5</b> phases</li></ul>
+        <span class="ptrack"><span class="pfill"></span></span>
         <span class="go">Open the handbook <span aria-hidden="true">&rarr;</span></span>
       </a>
 
-      <a class="tile reveal" style="--accent:var(--p2); --d:2" href="/lld/">
-        <div class="top-row"><span class="tag">Machine Coding</span></div>
+      <a class="tile reveal" style="--accent:var(--p2); --d:2" href="/lld/" data-lskey="sde2-lld-handbook-v1" data-total="95">
+        <div class="top-row"><span class="tag">Machine Coding</span><span class="status s-none">Not started</span></div>
         <h3>SDE-2 LLD Handbook</h3>
         <p>Object foundations and design patterns applied to 17 worked problems, built for machine-coding rounds.</p>
         <ul class="stats"><li><b>11</b> modules</li><li><b>17</b> worked problems</li><li><b>3</b> phases</li></ul>
+        <span class="ptrack"><span class="pfill"></span></span>
         <span class="go">Open the handbook <span aria-hidden="true">&rarr;</span></span>
       </a>
 
-      <a class="tile reveal" style="--accent:var(--p4); --d:3" href="/concurrency/">
-        <div class="top-row"><span class="tag">Java</span></div>
+      <a class="tile reveal" style="--accent:var(--p4); --d:3" href="/concurrency/" data-lskey="sde2-java-concurrency-handbook-v1" data-total="153">
+        <div class="top-row"><span class="tag">Java</span><span class="status s-none">Not started</span></div>
         <h3>Java Concurrency Handbook</h3>
         <p>From the memory model to executors, locks, and production hazards, with 10 hands-on labs along the way.</p>
         <ul class="stats"><li><b>15</b> modules</li><li><b>10</b> labs</li><li><b>4</b> phases</li></ul>
+        <span class="ptrack"><span class="pfill"></span></span>
         <span class="go">Open the handbook <span aria-hidden="true">&rarr;</span></span>
       </a>
 
-      <a class="tile reveal" style="--accent:var(--p6); --d:4" href="/kafka/">
-        <div class="top-row"><span class="tag">Event Streaming</span></div>
+      <a class="tile reveal" style="--accent:var(--p6); --d:4" href="/kafka/" data-lskey="kafka-sde2-handbook-v1" data-total="208">
+        <div class="top-row"><span class="tag">Event Streaming</span><span class="status s-none">Not started</span></div>
         <h3>Kafka SDE-2 Handbook</h3>
         <p>Producers, consumers, and what happens inside the broker, from first principles to production operation.</p>
         <ul class="stats"><li><b>21</b> modules</li><li><b>10</b> case studies</li><li><b>6</b> phases</li></ul>
+        <span class="ptrack"><span class="pfill"></span></span>
         <span class="go">Open the handbook <span aria-hidden="true">&rarr;</span></span>
       </a>
 
@@ -311,6 +327,33 @@ footer a:hover { color: var(--marker); }
       });
     });
   }
+
+  function readHandbookProgress(lskey, total) {
+    if (!total) return 0;
+    try {
+      var raw = localStorage.getItem(lskey);
+      if (!raw) return 0;
+      var state = JSON.parse(raw);
+      var k = state && state.k;
+      if (!k) return 0;
+      var done = 0;
+      for (var key in k) {
+        if (Object.prototype.hasOwnProperty.call(k, key) && key.indexOf("l:") === 0 && k[key] && k[key].v) done++;
+      }
+      return Math.max(0, Math.min(100, Math.round((done / total) * 100)));
+    } catch (e) { return 0; }
+  }
+  document.querySelectorAll("a.tile[data-lskey]").forEach(function (tile) {
+    var pct = readHandbookProgress(tile.getAttribute("data-lskey"), parseInt(tile.getAttribute("data-total"), 10));
+    var statusEl = tile.querySelector(".status");
+    var fillEl = tile.querySelector(".pfill");
+    if (fillEl) fillEl.style.width = pct + "%";
+    if (statusEl) {
+      if (pct <= 0) { statusEl.textContent = "Not started"; statusEl.className = "status s-none"; }
+      else if (pct >= 100) { statusEl.textContent = "Complete"; statusEl.className = "status s-done"; }
+      else { statusEl.textContent = pct + "% complete"; statusEl.className = "status s-progress"; }
+    }
+  });
 
   var reveals = document.querySelectorAll(".reveal");
   if (reduceMotion || !("IntersectionObserver" in window)) {
